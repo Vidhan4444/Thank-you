@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You - Sumeet Salunke</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts for styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #0f2027, #2c5364, #1c92d2);
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            z-index: 2;
+            position: relative;
+            text-align: center;
+        }
+        .typed {
+            font-size: 2.2rem;
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+            min-height: 60px;
+            letter-spacing: 2px;
+            color: #ffeb3b;
+            text-shadow: 0 2px 8px #000a;
+        }
+        .name {
+            font-size: 3rem;
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(90deg, #ff512f, #dd2476, #1fa2ff, #12d8fa, #a6ffcb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 12px #000a;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 2px 12px #000a, 0 0 20px #fff3; }
+            to { text-shadow: 0 2px 24px #fff, 0 0 40px #ffeb3b; }
+        }
+        .thankyou {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 0 2px 8px #000a;
+        }
+        /* 3D Cube */
+        .cube-container {
+            perspective: 800px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px auto;
+        }
+        .cube {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 4s infinite linear;
+            margin: 0 auto;
+        }
+        .cube-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #fff3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-family: 'Orbitron', monospace;
+            color: #fff;
+            box-shadow: 0 0 20px #fff2;
+        }
+        .cube-face.front  { transform: rotateY(0deg) translateZ(50px);  background: #ff512f55;}
+        .cube-face.back   { transform: rotateY(180deg) translateZ(50px); background: #1fa2ff55;}
+        .cube-face.right  { transform: rotateY(90deg) translateZ(50px);  background: #12d8fa55;}
+        .cube-face.left   { transform: rotateY(-90deg) translateZ(50px); background: #a6ffcb55;}
+        .cube-face.top    { transform: rotateX(90deg) translateZ(50px);  background: #ffeb3b55;}
+        .cube-face.bottom { transform: rotateX(-90deg) translateZ(50px); background: #dd247655;}
+        @keyframes rotateCube {
+            0% { transform: rotateX(0deg) rotateY(0deg);}
+            100% { transform: rotateX(360deg) rotateY(360deg);}
+        }
+        /* Fireworks canvas */
+        #fireworks-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="fireworks-canvas"></canvas>
+    <div class="container">
+        <div class="cube-container">
+            <div class="cube">
+                <div class="cube-face front">🎉</div>
+                <div class="cube-face back">🎂</div>
+                <div class="cube-face right">🎁</div>
+                <div class="cube-face left">✨</div>
+                <div class="cube-face top">🥳</div>
+                <div class="cube-face bottom">💖</div>
+            </div>
+        </div>
+        <div class="typed" id="typed"></div>
+        <div class="name">Sumeet Salunke</div>
+        <div class="thankyou">Thank you for making my day special!</div>
+    </div>
+    <!-- Typed.js animation -->
+    <script>
+        const messages = [
+            "Thank you for your wishes!",
+            "You made my birthday amazing!",
+            "Grateful for your love & support.",
+            "Let's celebrate together! 🎉"
+        ];
+        let i = 0, j = 0, current = '', isDeleting = false, speed = 80;
+        const typedEl = document.getElementById('typed');
+        function typeLoop() {
+            if (!isDeleting && j <= messages[i].length) {
+                current = messages[i].substring(0, j++);
+                typedEl.innerHTML = current + '<span style="border-right:2px solid #fff;animation:blink 1s infinite;"></span>';
+                setTimeout(typeLoop, speed);
+            } else if (isDeleting && j >= 0) {
+                current = messages[i].substring(0, j--);
+                typedEl.innerHTML = current + '<span style="border-right:2px solid #fff;animation:blink 1s infinite;"></span>';
+                setTimeout(typeLoop, speed / 2);
+            } else {
+                if (!isDeleting) {
+                    isDeleting = true;
+                    setTimeout(typeLoop, 1200);
+                } else {
+                    isDeleting = false;
+                    i = (i + 1) % messages.length;
+                    setTimeout(typeLoop, 600);
+                }
+            }
+        }
+        typeLoop();
+    </script>
+    <!-- Fireworks animation -->
+    <script>
+        // Simple fireworks effect
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+        let W = window.innerWidth, H = window.innerHeight;
+        canvas.width = W; canvas.height = H;
+        window.addEventListener('resize', () => {
+            W = window.innerWidth; H = window.innerHeight;
+            canvas.width = W; canvas.height = H;
+        });
+        function randomColor() {
+            return `hsl(${Math.random()*360},100%,60%)`;
+        }
+        function Firework() {
+            this.x = Math.random() * W;
+            this.y = H;
+            this.targetY = 150 + Math.random() * (H/2 - 150);
+            this.color = randomColor();
+            this.radius = 2 + Math.random() * 2;
+            this.speed = 6 + Math.random() * 2;
+            this.exploded = false;
+            this.particles = [];
+        }
+        Firework.prototype.update = function() {
+            if (!this.exploded) {
+                this.y -= this.speed;
+                if (this.y <= this.targetY) {
+                    this.exploded = true;
+                    for (let i = 0; i < 32; i++) {
+                        this.particles.push(new Particle(this.x, this.y, this.color));
+                    }
+                }
+            } else {
+                this.particles.forEach(p => p.update());
+            }
+        };
+        Firework.prototype.draw = function() {
+            if (!this.exploded) {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            } else {
+                this.particles.forEach(p => p.draw());
+            }
+        };
+        function Particle(x, y, color) {
+            this.x = x; this.y = y;
+            this.angle = Math.random() * 2 * Math.PI;
+            this.speed = 2 + Math.random() * 4;
+            this.radius = 1.5 + Math.random() * 1.5;
+            this.life = 0;
+            this.color = color;
+        }
+        Particle.prototype.update = function() {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + 0.5;
+            this.speed *= 0.96;
+            this.life++;
+        };
+        Particle.prototype.draw = function() {
+            ctx.save();
+            ctx.globalAlpha = Math.max(1 - this.life / 40, 0);
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = this.color;
+            ctx.shadowColor = this.color;
+            ctx.shadowBlur = 12;
+            ctx.fill();
+            ctx.restore();
+        };
+        let fireworks = [];
+        function animate() {
+            ctx.clearRect(0, 0, W, H);
+            if (Math.random() < 0.04) fireworks.push(new Firework());
+            fireworks.forEach(fw => { fw.update(); fw.draw(); });
+            fireworks = fireworks.filter(fw => !fw.exploded || fw.particles.some(p => p.life < 40));
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
