@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You - Sumeet Salunke</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5e6ff 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+        .thankyou-container {
+            background: rgba(255,255,255,0.85);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(44,62,80,0.15);
+            padding: 40px 32px 32px 32px;
+            text-align: center;
+            position: relative;
+            animation: popIn 1s cubic-bezier(.68,-0.55,.27,1.55);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7) rotate(-10deg); opacity: 0; }
+            80% { transform: scale(1.05) rotate(2deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .thankyou {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #7b2ff2;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            animation: thankyouGlow 2s infinite alternate;
+        }
+        @keyframes thankyouGlow {
+            from { text-shadow: 0 0 10px #7b2ff2, 0 0 20px #f357a8; }
+            to { text-shadow: 0 0 20px #f357a8, 0 0 40px #7b2ff2; }
+        }
+        .animated-message {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeInText 1.2s 1s forwards, textWave 2.5s 1.2s infinite alternate;
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @keyframes textWave {
+            0% { letter-spacing: 1px; color: #444;}
+            50% { letter-spacing: 3px; color: #7b2ff2;}
+            100% { letter-spacing: 1px; color: #444;}
+        }
+        .name {
+            font-size: 1.3rem;
+            color: #222;
+            margin-bottom: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .festival {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.6rem;
+            color: #0f9d58;
+            margin-top: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            animation: fadeInUp 1.2s 0.5s both;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .radha-krishna-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 4px 24px rgba(123,47,242,0.15);
+            margin: 0 auto 10px auto;
+            display: block;
+            background: #fff;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0);}
+            50% { transform: translateY(-18px);}
+        }
+        .confetti {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .regards {
+            font-size: 1.05rem;
+            color: #7b2ff2;
+            margin-top: 10px;
+            font-family: 'Pacifico', cursive;
+            opacity: 0;
+            animation: fadeInText 1.2s 2.2s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="thankyou-container">
+        <canvas class="confetti"></canvas>
+        <div class="thankyou">Thank You!</div>
+        <div class="animated-message">Your wishes made my day extra special!</div>
+        <!-- <div class="name">Sumeet Salunke</div> -->
+        <div class="festival">Happy Krishn Janmashtami</div>
+        <img class="radha-krishna-img" src="https://www.bing.com/images/search?view=detailV2&ccid=XFKpM0Tu&id=ADFEE609A772DC64CE2F65E5014958C0EE13F0B3&thid=OIP.XFKpM0TuEsKuYusHz4eESwHaHa&mediaurl=https%3a%2f%2fcdn.lazyshop.com%2ffiles%2f1c714380-8792-4f9f-a205-96b1a6182b2d%2fproduct%2f777318a3ff24105ae15ad518b9088783.jpeg&exph=1080&expw=1080&q=Cute+Little+Radha+Krishna+Images+78+%7c+littlekrishnaimages.in&mode=overlay&FORM=IQFRBA&ck=C2D416CE2B8F5EA0185704DE5DF9D0A8&selectedIndex=0" alt="Radha Krishna" />
+        <div class="regards">Regards - Sumeet Salunke</div>
+    </div>
+    <script>
+        // Simple confetti animation
+        const canvas = document.querySelector('.confetti');
+        const ctx = canvas.getContext('2d');
+        let W = canvas.width = 380;
+        let H = canvas.height = 220;
+        function resize() {
+            W = canvas.width = document.querySelector('.thankyou-container').offsetWidth;
+            H = canvas.height = document.querySelector('.thankyou-container').offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const confettiColors = ['#7b2ff2', '#f357a8', '#0f9d58', '#f7b731', '#f5e6ff'];
+        const confetti = [];
+        for(let i=0;i<40;i++){
+            confetti.push({
+                x: Math.random()*W,
+                y: Math.random()*H,
+                r: Math.random()*8+4,
+                d: Math.random()*40+10,
+                color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+                tilt: Math.random()*10-10,
+                tiltAngleIncremental: (Math.random()*0.07)+.05,
+                tiltAngle: 0
+            });
+        }
+        function drawConfetti(){
+            ctx.clearRect(0,0,W,H);
+            confetti.forEach(c=>{
+                ctx.beginPath();
+                ctx.lineWidth = c.r;
+                ctx.strokeStyle = c.color;
+                ctx.moveTo(c.x + c.tilt + (c.r/3), c.y);
+                ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.d/3);
+                ctx.stroke();
+            });
+            updateConfetti();
+        }
+        function updateConfetti(){
+            confetti.forEach(c=>{
+                c.y += (Math.cos(c.d)+2 + c.r/2)/2;
+                c.x += Math.sin(0.01);
+                c.tiltAngle += c.tiltAngleIncremental;
+                c.tilt = Math.sin(c.tiltAngle- (c.d/3)) * 15;
+                if(c.y > H){
+                    c.x = Math.random()*W;
+                    c.y = -10;
+                }
+            });
+        }
+        function animate(){
+            drawConfetti();
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
